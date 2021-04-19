@@ -1,11 +1,15 @@
 package fi.hh.swd20.laavutusCHL.domain;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -29,6 +33,9 @@ public class Fire {
 	@JoinColumn(name="statusid")
 	private Status status;
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="fire")
+	@JsonIgnoreProperties("fire")  // tällä vältetään JSON serialization/deserialization looppi
+	private List<Review> reviews;
 	
 	// constructors
 	

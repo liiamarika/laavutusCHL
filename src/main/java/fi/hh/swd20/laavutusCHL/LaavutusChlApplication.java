@@ -11,6 +11,8 @@ import fi.hh.swd20.laavutusCHL.domain.Category;
 import fi.hh.swd20.laavutusCHL.domain.CategoryRepository;
 import fi.hh.swd20.laavutusCHL.domain.Fire;
 import fi.hh.swd20.laavutusCHL.domain.FireRepository;
+import fi.hh.swd20.laavutusCHL.domain.Review;
+import fi.hh.swd20.laavutusCHL.domain.ReviewRepository;
 import fi.hh.swd20.laavutusCHL.domain.Status;
 import fi.hh.swd20.laavutusCHL.domain.StatusRepository;
 
@@ -26,7 +28,7 @@ public class LaavutusChlApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner laavutusChlDemo (FireRepository frepository, CategoryRepository crepository, StatusRepository srepository) {
+	public CommandLineRunner laavutusChlDemo (FireRepository frepository, CategoryRepository crepository, StatusRepository srepository, ReviewRepository rrepository) {
 		return (args) -> {
 			// luodaan testidataan kategoriat
 			log.info("create and save some categories");
@@ -41,7 +43,7 @@ public class LaavutusChlApplication {
 			log.info("create and save some statuses");
 			Status status1 = new Status("Vierailtu");
 			srepository.save(status1);
-			Status status2 = new Status("Haluan mennnä");
+			Status status2 = new Status("Vierailematta");
 			srepository.save(status2);
 			Status status3 = new Status("Suosikki");
 			srepository.save(status3);
@@ -54,6 +56,26 @@ public class LaavutusChlApplication {
 			frepository.save(fire2);
 			Fire fire3 = new Fire("Korsolammen nuotiopaikka", "Kirkkonummi", "60.16867191926468, 24.370582191436448", category3, status2);
 			frepository.save(fire3);
+			
+			// luodaan testidataan tulipaikat
+			log.info("create and save some reviews");
+			
+			
+			// näytetään luodut testidatat consolessa
+			log.info("Fetch all categories");
+			for (Category category : crepository.findAll()) {
+			   log.info(category.toString());
+			}
+			
+			log.info("Fetch all statuses");
+			for (Status status : srepository.findAll()) {
+			   log.info(status.toString());
+			}
+			
+			log.info("Fetch all fires");
+			for (Fire fire : frepository.findAll()) {
+			   log.info(fire.toString());
+			}
 		};
 	}
 

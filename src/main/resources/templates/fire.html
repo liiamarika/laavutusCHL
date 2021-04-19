@@ -4,9 +4,9 @@
 <head>
 <style>
 header {
-  background-color: #ffffff;
+  background-color: #F1F1F1;
   text-align: center;
-  padding: 30px;
+  padding: 20px;
 }
 ul {
   list-style-type: none;
@@ -28,7 +28,7 @@ li a {
 li a:hover:not(.active) {
   background-color: #111;
 }
-active {
+.active {
   background-color: #4CAF50;
 }
 </style>
@@ -40,30 +40,19 @@ active {
 	 <div class="col-md-4" style="padding:20px 0">
 	</div>
 	<ul>
-	  <li><a href="/index">Alkuun</a></li>
-	  <li><a class="active" href="/firelist">Tulipaikat</a></li>
+	  <li><a class="active" href="/index">Alkuun</a></li>
+	  <li><a href="/firelist">Tulipaikat</a></li>
 	  <li><a href="/reviewlist">Arvostelut</a></li>
 	</ul>
-    <table class="table table-striped">
-		<tr>
-		    <th>Nimi</th>
-		    <th>Sijainti</th>
-		    <th>Koordinaatit</th>
-		    <th>Tyyppi</th>
-		    <th>Status</th>
-		</tr>  
+    <table class="table table-striped"> 
     	<tr th:each = "fire : ${fires}">
-    		<td> <a th:text="${fire.name}" th:href="@{/fire/{id}{id=${fire.id}}}"></a></td>
+    		<td th:text="${fire.name}"></td>
     		<td th:text="${fire.location}"></td>
     		<td th:text="${fire.coordinates}"></td>
     		<td th:text="${fire.category}"></td>
-    		<td th:text="${fire.status}"></td>	
-    		<td><a href="/addreview" class="btn btn-success">Arvostele</a></td>
-    		<td><a th:href="@{/edit/{id}(id=${fire.id})}" class="btn btn-warning">Muokkaa</a></td>  
-    		<td><a th:href="@{/delete/{id}(id=${fire.id})}" class="btn btn-danger">Poista</a></td>  	
+    		<td th:text="${fire.status}"></td>	 	
     	</tr>
      </table> 	
-      <a href="/addfire" class="btn btn-success">Lisää tulipaikka</a>  
 </body>    	
 </body>
 </html>
