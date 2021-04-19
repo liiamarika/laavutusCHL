@@ -13,12 +13,12 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
+//entity edustaa taulua relaatiotietokannassa, table name = name of the entity class
 @Entity
 public class Fire {
 	
-	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	@Id // luodaan id columni
+	@GeneratedValue(strategy= GenerationType.AUTO) // generoidaan uniikki id
 	private Long id;
 	private String name;
 	private String location;
@@ -26,7 +26,7 @@ public class Fire {
 	
 	@ManyToOne
 	@JsonIgnoreProperties("fires")// vältetään looppi: JSON serialization/deserialization with bidirectional relationships
-	@JoinColumn(name="ctgrid")
+	@JoinColumn(name="ctgrid") // määrittää suhteen omistajaosapuolen, toisessa on viiteavain
 	private Category category;
 	@ManyToOne
 	@JsonIgnoreProperties("fires")// vältetään looppi: JSON serialization/deserialization with bidirectional relationships

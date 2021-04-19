@@ -60,10 +60,15 @@ active {
     		<td th:text="${fire.status}"></td>	
     		<td><a href="/addreview" class="btn btn-success">Arvostele</a></td>
     		<td><a th:href="@{/edit/{id}(id=${fire.id})}" class="btn btn-warning">Muokkaa</a></td>  
-    		<td><a th:href="@{/delete/{id}(id=${fire.id})}" class="btn btn-danger">Poista</a></td>  	
+    		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${fire.id})}" class="btn btn-danger">Poista</a></td>  	
     	</tr>
      </table> 	
       <a href="/addfire" class="btn btn-success">Lisää tulipaikka</a>  
+    <div class="col-md-4" style="padding:20px 0">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+		</form>
+	</div>
 </body>    	
 </body>
 </html>

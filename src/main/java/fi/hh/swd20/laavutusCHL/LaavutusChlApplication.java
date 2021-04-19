@@ -15,6 +15,8 @@ import fi.hh.swd20.laavutusCHL.domain.Review;
 import fi.hh.swd20.laavutusCHL.domain.ReviewRepository;
 import fi.hh.swd20.laavutusCHL.domain.Status;
 import fi.hh.swd20.laavutusCHL.domain.StatusRepository;
+import fi.hh.swd20.laavutusCHL.domain.User;
+import fi.hh.swd20.laavutusCHL.domain.UserRepository;
 
 
 @SpringBootApplication
@@ -28,7 +30,7 @@ public class LaavutusChlApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner laavutusChlDemo (FireRepository frepository, CategoryRepository crepository, StatusRepository srepository, ReviewRepository rrepository) {
+	public CommandLineRunner laavutusChlDemo (FireRepository frepository, CategoryRepository crepository, StatusRepository srepository, ReviewRepository rrepository, UserRepository urepository) {
 		return (args) -> {
 			// luodaan testidataan kategoriat
 			log.info("create and save some categories");
@@ -57,10 +59,16 @@ public class LaavutusChlApplication {
 			Fire fire3 = new Fire("Korsolammen nuotiopaikka", "Kirkkonummi", "60.16867191926468, 24.370582191436448", category3, status2);
 			frepository.save(fire3);
 			
-			// luodaan testidataan tulipaikat
-			log.info("create and save some reviews");
-			
-			
+			// luodaan testikäyttäjiä
+			log.info("save couple of users");
+			User user1 = new User("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "user@user.fi", "USER");
+			urepository.save(user1);
+			User user2 = new User("admin", "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C", "admin@admin.fi", "ADMIN");
+			urepository.save(user2);
+			User user3 = new User("liia", "$2a$10$eLgmttXgTYdiq3ieqTXR8OBKWgdF/AERV6DoG84GjmrD/LQ30CKRy", "liia@liia.fi", "ADMIN");
+			urepository.save(user3);
+
+
 			// näytetään luodut testidatat consolessa
 			log.info("Fetch all categories");
 			for (Category category : crepository.findAll()) {
@@ -75,6 +83,11 @@ public class LaavutusChlApplication {
 			log.info("Fetch all fires");
 			for (Fire fire : frepository.findAll()) {
 			   log.info(fire.toString());
+			}
+			
+			log.info("Fetch all users");
+			for (User user : urepository.findAll()) {
+			   log.info(user.toString());
 			}
 		};
 	}

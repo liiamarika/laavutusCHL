@@ -1,12 +1,17 @@
 package fi.hh.swd20.laavutusCHL.webcontroller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import fi.hh.swd20.laavutusCHL.domain.CategoryRepository;
 import fi.hh.swd20.laavutusCHL.domain.Fire;
@@ -35,7 +40,12 @@ public class FireController {
 		public String startPage() {
 			return "index";
 		}
-	
+		
+	// sisäänkirjautumissivu
+	    @RequestMapping(value="/login")
+	    public String login() {	
+	        return "login";
+	    }
 	
 	// tuottaa listan tulipaikoista
 	@RequestMapping(value = "/firelist")
@@ -43,6 +53,15 @@ public class FireController {
 		model.addAttribute("fires", frepository.findAll());
 		return "firelist";
 	}
+	
+	// RESTful service to get all fires
+	// java-kielinen fire luokan oliolistan pohjalta tuotetaan json-fireoliolistaksi
+    // ja lähetetään web-selaimelle  vastauksena eli response bodyna
+	@RequestMapping(value="/fires", method = RequestMethod.GET)
+	public @ResponseBody List<Fire> fireListRest() {
+		return(List<Fire>) frepository.findAll();
+	}
+	
 	
 	// lisätään paikka lomakkeelta
 	@RequestMapping(value = "/addfire")
@@ -64,7 +83,8 @@ public class FireController {
 	
 	// poistetaan tulipaikka idn perusteella
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public String delete (@PathVariable(value= "id") long id) {
+	@PreAuthorize("hasRole('ADMIN')")
+	public String delete (@PathVariable(value= "id") long id) { // pathvariable eristää idn numeron urlista
 		frepository.deleteById(id);
 		return "redirect:/firelist";
 	}
@@ -79,6 +99,12 @@ public class FireController {
 		model.addAttribute("statuses", srepository.findAll());
 		return "editfire";
 	}
+	
+	// RESTful service fire idn perusteella
+    @RequestMapping(value="/fires/{id}", method = RequestMethod.GET)
+    public @ResponseBody Optional<Fire> findFireRest(@PathVariable("id") Long id) {	
+    	return frepository.findById(id);
+    } 
 
 	// haetaan tulipaikkaan liittyvät arvostelut
 	@RequestMapping(value= "/fire/{id}")
