@@ -78,7 +78,7 @@ public class FireController {
 	
 	// poistetaan tulipaikka idn perusteella
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String delete (@PathVariable(value= "id") long id) { // pathvariable eristää idn numeron urlista
 		frepository.deleteById(id);
 		return "redirect:/firelist";
@@ -86,7 +86,7 @@ public class FireController {
 		
 	// haetaan tulipaikka idn perusteella muokattavaksi lomakkeelle
 	@RequestMapping(value = "/edit/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String edit (@PathVariable(value="id") long id, Model model) {
 		model.addAttribute("fire", frepository.findById(id));
 		// dropdown valikon kategoriat
