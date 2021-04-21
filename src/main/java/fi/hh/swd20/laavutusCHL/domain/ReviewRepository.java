@@ -8,4 +8,6 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
 
 	List<Review> findByNick(String nick);
 	
+	Long deleteByNick(String nick);
+	
 }

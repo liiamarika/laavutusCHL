@@ -59,6 +59,11 @@ public class LaavutusChlApplication {
 			Fire fire3 = new Fire("Korsolammen nuotiopaikka", "Kirkkonummi", "60.16867191926468, 24.370582191436448", category3, status2);
 			frepository.save(fire3);
 			
+			log.info("create and save a review"); // mikä ihme on päiväyksen muoto tässä?
+			Review review = new Review("Erä-Remu", null, "Kaunis eväspaikka", "Tässä paikassa parasta oli eväät", fire1);
+	    	rrepository.save(review);
+			
+			
 			// luodaan testikäyttäjiä
 			log.info("save couple of users");
 			User user1 = new User("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "user@user.fi", "USER");

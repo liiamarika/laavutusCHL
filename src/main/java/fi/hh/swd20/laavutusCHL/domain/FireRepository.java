@@ -9,6 +9,8 @@ public interface FireRepository extends CrudRepository<Fire, Long> {
 	
 	List<Fire> findByName(String name);
 	
+	Long deleteByName(String name);
+	
 	// Enabling ORDER BY for a query
 	 List<Fire> findByNameOrderByNameAsc(String name);
 	 
