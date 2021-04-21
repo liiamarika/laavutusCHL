@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,10 +21,12 @@ public class Review {
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private Long rid;
+	@NotEmpty
 	private String nick;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date date;
 	private String subject;
+	@Size(min=5, max=100)
 	private String text;
 
 	@ManyToOne

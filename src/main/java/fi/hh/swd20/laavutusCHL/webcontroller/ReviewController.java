@@ -1,8 +1,11 @@
 package fi.hh.swd20.laavutusCHL.webcontroller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,9 +49,13 @@ public class ReviewController {
 		
 	// tallennetaan arvostelu kantaan
 		@RequestMapping(value = "/savereview", method = RequestMethod.POST)
-		public String save (Review review) {
+		public String save (@Valid Review review, BindingResult bindingResult) {
+			if (bindingResult.hasErrors()) { // validoi onko erroreita
+				return "addreview"; // antaa uudelleen tyhjän lomakkeen kun virheitä; mutta mistä saan sanoman vaihdettua ja dropdownin mukaan?
+			} else {
 			rrepository.save(review);
 			return "redirect:reviewlist";
+			}
 		}
 	
 	

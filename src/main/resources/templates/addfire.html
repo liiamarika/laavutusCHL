@@ -1,7 +1,23 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
-
+<style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+div {
+  width: 50%;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
 <head>
     <title>Laavutus CHL - lisää</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -12,10 +28,8 @@
 		<form th:object="${fire}" th:action="@{save}" action="#" method="post">
 		  	<label for="name">Nimi</label>
 			<input type="text" id="name" th:field="*{name}" />
-			<div style="clear: both; display: block; height: 10px;"></div>
 		  	<label for="location">Sijainti</label>
 			<input type="text" id="location" th:field="*{location}" />
-			<div style="clear: both; display: block; height: 10px;"></div>
 		  	<label for="coordinates">Koordinaatit</label>
 			<input type="text" id="coordinates" th:field="*{coordinates}" />
 			<div style="clear: both; display: block; height: 10px;"></div>
@@ -31,7 +45,7 @@
 			 <option th:each="status: ${statuses}" th:value="${status.statusid}"
 			 th:text="${status.state}"></option>
 			</select>
-			
+			<div style="clear: both; display: block; height: 10px;"></div>
 			<input type="submit" value="Save"></input>
 		</form>
 	</div>

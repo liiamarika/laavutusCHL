@@ -1,7 +1,23 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
-
+<style>
+input[type=text], input placeholder, select {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+div {
+  width: 50%;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
 <head>
     <title>Laavutus CHL - arvostelu</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -12,25 +28,21 @@
 		<form th:object="${review}" th:action="@{savereview}" action="#" method="post">
 		  	<label for="nick">Nimimerkki</label>
 			<input type="text" id="nick" th:field="*{nick}" />
-			<div style="clear: both; display: block; height: 10px;"></div>
+			<p th:if="${#fields.hasErrors('nick')}" th:errors="*{nick}"></p>
 		  	<label for="date">Ajankohta</label>
 		  	<input placeholder="dd.mm.yyyy" type="date" id="date" name="date" class="form-control" required th:field="*{date}"/>
-			<div style="clear: both; display: block; height: 10px;"></div>
 		  	<label for="subject">Otsikko</label>
 			<input type="text" id="subject" th:field="*{subject}" />
-			<div style="clear: both; display: block; height: 10px;"></div>
-			<label for="text">Arvostelu</label>
+			<label for="text">Arvostelu (max. 100 merkkiä)</label>
 			<input type="text" id="text" th:field="*{text}" />
-			<div style="clear: both; display: block; height: 10px;"></div>
-			
+			<p th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
 			<label for="flist">Tulipaikka</label>
 			<select id="flist" th:field="*{fire}" class="form-control">
 			 <option th:each="fire: ${fires}" th:value="${fire.id}"
 			 th:text="${fire.name}"></option>
 			</select>
-		
-			
-			<input type="submit" value="Save"></input>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<input type="submit" value="Tallenna"></input>
 		</form>
 	</div>
 </body>

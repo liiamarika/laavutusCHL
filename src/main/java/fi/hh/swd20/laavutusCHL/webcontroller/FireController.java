@@ -35,12 +35,7 @@ public class FireController {
 	private ReviewRepository rrepository;
 	
 	
-	// http://localhost:8080/mitävaan
-		@RequestMapping("*")
-		public String startPage() {
-			return "index";
-		}
-		
+	
 	// sisäänkirjautumissivu
 	    @RequestMapping(value="/login")
 	    public String login() {	
@@ -54,8 +49,8 @@ public class FireController {
 		return "firelist";
 	}
 	
-	// RESTful service to get all fires
-	// java-kielinen fire luokan oliolistan pohjalta tuotetaan json-fireoliolistaksi
+	// RESTful service to get all fires - JSON
+	// java-kielinen fire luokan oliolistan pohjalta tuotetaan json-fire oliolistaksi
     // ja lähetetään web-selaimelle  vastauksena eli response bodyna
 	@RequestMapping(value="/fires", method = RequestMethod.GET)
 	public @ResponseBody List<Fire> fireListRest() {
@@ -91,6 +86,7 @@ public class FireController {
 		
 	// haetaan tulipaikka idn perusteella muokattavaksi lomakkeelle
 	@RequestMapping(value = "/edit/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public String edit (@PathVariable(value="id") long id, Model model) {
 		model.addAttribute("fire", frepository.findById(id));
 		// dropdown valikon kategoriat
@@ -100,7 +96,7 @@ public class FireController {
 		return "editfire";
 	}
 	
-	// RESTful service fire idn perusteella
+	// RESTful service fire idn perusteella -JSON
     @RequestMapping(value="/fires/{id}", method = RequestMethod.GET)
     public @ResponseBody Optional<Fire> findFireRest(@PathVariable("id") Long id) {	
     	return frepository.findById(id);
@@ -108,10 +104,9 @@ public class FireController {
 
 	// haetaan tulipaikkaan liittyvät arvostelut
 	@RequestMapping(value= "/fire/{id}")
-	public String fire (@PathVariable(value="id") long id, Model model) {
+	public String info (@PathVariable(value="id") long id, Model model) {
 		model.addAttribute("fire", frepository.findById(id));
-		model.addAttribute("review", rrepository.findAll());
-		return "fire";
+		return "fireinfo";
 	}
 	
 			

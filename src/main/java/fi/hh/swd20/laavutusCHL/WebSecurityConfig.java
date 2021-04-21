@@ -24,13 +24,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-		.authorizeRequests().antMatchers().permitAll()
+		.authorizeRequests().antMatchers("/h2-console/**", "/css/bootstrap.min.css").permitAll()
+		.and()
+		.csrf().ignoringAntMatchers("/h2-console/**")
+		.and()
+		.headers().frameOptions().sameOrigin()
 		.and()
 		.authorizeRequests().anyRequest().authenticated()
 		.and()
 	.formLogin()
 		.loginPage("/login")
-		.defaultSuccessUrl("/indext", true)
+		.defaultSuccessUrl("/firelist", true)
 		.permitAll()
 		.and()
 	.logout()

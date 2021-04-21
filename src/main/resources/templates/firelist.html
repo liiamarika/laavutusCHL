@@ -22,27 +22,29 @@ li a {
   display: block;
   color: white;
   text-align: center;
-  padding: 14px 16px;
+  padding: 20px 16px;
   text-decoration: none;
 }
-li a:hover:not(.active) {
-  background-color: #111;
+li form {
+	text-align: center;
+	padding: 20px;
 }
-active {
-  background-color: #4CAF50;
-}
+
 </style>
     <title>Laavutus challenge</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 	<header><h1>Laavutus Challenge</h1></header>
+	<p align="center">Tervemenoa laavuttamaan!</p>
 	 <div class="col-md-4" style="padding:20px 0">
 	</div>
 	<ul>
-	  <li><a href="/index">Alkuun</a></li>
-	  <li><a class="active" href="/firelist">Tulipaikat</a></li>
+	  <li><a href="/firelist">Tulipaikat</a></li>
 	  <li><a href="/reviewlist">Arvostelut</a></li>
+	  <li style="float:right"><form th:action="@{/logout}" method="post">
+			<input type="submit" value="Kirjaudu ulos" class="btn btn-sm btn-danger"/>
+		</form></li>
 	</ul>
     <table class="table table-striped">
 		<tr>
@@ -53,22 +55,17 @@ active {
 		    <th>Status</th>
 		</tr>  
     	<tr th:each = "fire : ${fires}">
-    		<td> <a th:text="${fire.name}" th:href="@{/fire/{id}{id=${fire.id}}}"></a></td>
+    		<td th:text="${fire.name}"></td>
     		<td th:text="${fire.location}"></td>
     		<td th:text="${fire.coordinates}"></td>
     		<td th:text="${fire.category}"></td>
     		<td th:text="${fire.status}"></td>	
     		<td><a href="/addreview" class="btn btn-success">Arvostele</a></td>
-    		<td><a th:href="@{/edit/{id}(id=${fire.id})}" class="btn btn-warning">Muokkaa</a></td>  
+    		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${fire.id})}" class="btn btn-warning">Muokkaa</a></td>  
     		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${fire.id})}" class="btn btn-danger">Poista</a></td>  	
     	</tr>
      </table> 	
       <a href="/addfire" class="btn btn-success">Lisää tulipaikka</a>  
-    <div class="col-md-4" style="padding:20px 0">
-		<form th:action="@{/logout}" method="post">
-			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
-		</form>
-	</div>
 </body>    	
 </body>
 </html>

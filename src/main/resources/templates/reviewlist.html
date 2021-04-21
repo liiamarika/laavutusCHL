@@ -22,15 +22,14 @@ li a {
   display: block;
   color: white;
   text-align: center;
-  padding: 14px 16px;
+  padding: 20px 16px;
   text-decoration: none;
 }
-li a:hover:not(.active) {
-  background-color: #111;
+li form {
+	text-align: center;
+	padding: 20px;
 }
-active {
-  background-color: #4CAF50;
-}
+
 </style>
 
     <title>Laavutus challenge</title>
@@ -38,12 +37,15 @@ active {
 </head>
 <body>
 	<header><h1>Laavutus Challenge</h1></header>
+	<p align="center">Tervemenoa laavuttamaan!</p>
 	 <div class="col-md-4" style="padding:20px 0">
 	</div>
 	<ul>
-	  <li><a href="/index">Alkuun</a></li>
 	  <li><a href="/firelist">Tulipaikat</a></li>
-	  <li><a class="active" href="/reviewlist">Arvostelut</a></li>
+	  <li><a href="/reviewlist">Arvostelut</a></li>
+	  <li style="float:right"><form th:action="@{/logout}" method="post">
+			<input type="submit" value="Kirjaudu ulos" class="btn btn-sm btn-danger"/>
+		</form></li>
 	</ul>
     <table class="table table-striped">
 		<tr>
@@ -62,10 +64,5 @@ active {
     	</tr>
      </table> 	
       <a href="/addreview" class="btn btn-success">Lisää arvostelu</a> 
-      <div class="col-md-4" style="padding:20px 0">
-		<form th:action="@{/logout}" method="post">
-			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
-		</form>
-	</div>
 </body>
 </html>
