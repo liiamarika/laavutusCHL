@@ -35,7 +35,12 @@ public class FireController {
 	private ReviewRepository rrepository;
 	
 	
-	
+	// sisäänkirjautumissivu
+    @RequestMapping(value="/*")
+    public String startPage() {	
+        return "login";
+    }
+    
 	// sisäänkirjautumissivu
 	    @RequestMapping(value="/login")
 	    public String login() {	
