@@ -51,8 +51,10 @@ public class ReviewController {
 		
 	// tallennetaan arvostelu kantaan
 		@RequestMapping(value = "/savereview", method = RequestMethod.POST)
-		public String save (@Valid Review review, BindingResult bindingResult) {
+		public String save (@Valid Review review, BindingResult bindingResult, Model model) {
 			if (bindingResult.hasErrors()) { // validoi onko erroreita
+				// dropdown valikon kategoriat
+				model.addAttribute("fires", frepository.findAll());
 				return "addreview"; // antaa uudelleen tyhjän lomakkeen kun virheitä; mutta mistä saan sanoman vaihdettua ja dropdownin mukaan?
 			} else {
 			rrepository.save(review);

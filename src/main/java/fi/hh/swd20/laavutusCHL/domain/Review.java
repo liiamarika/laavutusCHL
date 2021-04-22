@@ -21,12 +21,12 @@ public class Review {
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private Long rid;
-	@NotEmpty
+	@NotEmpty (message="Nimimerkki puuttuu")
 	private String nick;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date date;
 	private String subject;
-	@Size(min=5, max=100)
+	@Size(min=5, max=100, message="Arvion pitää olla 5-100 merkkiä")
 	private String text;
 
 	@ManyToOne
