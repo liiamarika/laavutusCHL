@@ -36,24 +36,24 @@ li form {
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<header><h1>Laavutus Challenge</h1></header>
-	<p align="center">Tervemenoa laavuttamaan!</p>
+	<header><h1 th:text="#{header}"></h1></header>
+	<p align="center" th:text="#{greeting}"></p>
 	 <div class="col-md-4" style="padding:20px 0">
 	</div>
 	<ul>
-	  <li><a href="/firelist">Tulipaikat</a></li>
-	  <li><a href="/reviewlist">Arvostelut</a></li>
+	  <li><a href="/firelist" th:text="#{nav1}"></a></li>
+	  <li><a href="/reviewlist" th:text="#{nav2}"></a></li>
 	  <li style="float:right"><form th:action="@{/logout}" method="post">
-			<input type="submit" value="Kirjaudu ulos" class="btn btn-sm btn-danger"/>
+			<input type="submit" th:value="#{logout}" class="btn btn-sm btn-danger"/>
 		</form></li>
 	</ul>
     <table class="table table-striped">
 		<tr>
-		    <th>Käyttäjänimi</th>
-		    <th>Päiväys</th>
-		    <th>Otsikko</th>
-		    <th>Arvostelu</th>
-		    <th>Tulipaikka</th>
+		    <th th:text="#{nick}"></th>
+		    <th th:text="#{date}"></th>
+		    <th th:text="#{subject}"></th>
+		    <th th:text="#{text}"></th>
+		    <th th:text="#{fire}"></th>
 		</tr>  
     	<tr th:each = "review : ${reviews}">
     		<td th:text="${review.nick}"></td>
@@ -61,9 +61,32 @@ li form {
     		<td th:text="${review.subject}"></td>
     		<td th:text="${review.text}"></td>
     		<td> <a th:text="${review.fire.name}" th:href="@{/firelist}"></a></td>
-    		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/deletereview/{id}(id=${review.rid})}" class="btn btn-danger">Poista</a></td>  
+    		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/deletereview/{id}(id=${review.rid})}" class="btn btn-danger" th:text="#{delete}"></a></td>  
     	</tr>
      </table> 	
-      <a href="/addreview" class="btn btn-success">Lisää arvostelu</a> 
+      <a href="/addreview" class="btn btn-success"  th:text="#{addreview}"></a> 
+      
+            <div style="clear: both; display: block; height: 20px;"></div>
+      
+		    <span th:text="#{lang.change}"></span>:
+			<select id="locales">
+		    <option value=""></option>
+		    <option value="fi" th:text="#{lang.fi}"></option>
+		    <option value="en" th:text="#{lang.en}"></option>
+		    <option value="es" th:text="#{lang.es}"></option>
+		    </select>
+		    
+		    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+			</script>
+			<script type="text/javascript">
+			$(document).ready(function() {
+			    $("#locales").change(function () {
+			        var selectedOption = $('#locales').val();
+			        if (selectedOption != ''){
+			            window.location.replace('reviewlist?lang=' + selectedOption);
+			        }
+			    });
+			});
+			</script>
 </body>
 </html>

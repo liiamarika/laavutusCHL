@@ -16,23 +16,51 @@ form {
       <title>Laavutus Challenge</title>
       </head>
   <body>
- 	 <header><h1>Laavutus Challenge</h1></header>
- 	 <p align="center">Tervemenoa laavuttamaan!</p>
+ 	 <header><h1 th:text="#{header}"></h1></header>
+ 	 <p align="center" th:text="#{greeting}"></p>
  	 <div class="row justify-content-center">
      <div class="col-md-3 col-md-offset-2">
         <div class="alert alert-danger" th:if="${param.error}">
-            Väärä käyttäjätunnus tai salasana
+            Wrong username or password
         </div>
         <div class="alert alert-warning" th:if="${param.logout}">
-            Olet nyt kirjautunut ulos
+            You are now logged out
         </div>
         <form th:action="@{/login}" method="post">
-            <div class="row justify-content-center"><label> Käyttäjätunnus: <input type="text" name="username" class="form-control"/> </label></div>
-            <div class="row justify-content-center"><label> Salasana: <input type="password" name="password" class="form-control"/> </label></div>
-            <div class="row justify-content-center"><input type="submit" value="Kirjaudu sisään" class="btn btn-primary"/></div>
+            <div class="row justify-content-center"><label>Username<input type="text" name="username" class="form-control"/> </label></div>
+            <div class="row justify-content-center"><label>Password<input type="password" name="password" class="form-control"/> </label></div>
+            <div class="row justify-content-center"><input type="submit" th:value="#{login}" class="btn btn-primary"/></div>
         </form>
+      
+       
+        
+            <div style="clear: both; display: block; height: 30px;"></div>
+      
+		    <span th:text="#{lang.change}"></span>:
+			<select id="locales">
+		    <option value=""></option>
+		    <option value="fi" th:text="#{lang.fi}"></option>
+		    <option value="en" th:text="#{lang.en}"></option>
+		    <option value="es" th:text="#{lang.es}"></option>
+		    </select>
+		    
+		    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+			</script>
+			<script type="text/javascript">
+			$(document).ready(function() {
+			    $("#locales").change(function () {
+			        var selectedOption = $('#locales').val();
+			        if (selectedOption != ''){
+			            window.location.replace('login?lang=' + selectedOption);
+			        }
+			    });
+			});
+			</script>
+			
+		 </div>
        </div>
-       </div>
+       
+       
     </body>
       
 </html>
