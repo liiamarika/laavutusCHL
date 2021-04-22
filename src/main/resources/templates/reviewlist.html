@@ -61,6 +61,7 @@ li form {
     		<td th:text="${review.subject}"></td>
     		<td th:text="${review.text}"></td>
     		<td> <a th:text="${review.fire.name}" th:href="@{/firelist}"></a></td>
+    		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/deletereview/{id}(id=${review.rid})}" class="btn btn-danger">Poista</a></td>  
     	</tr>
      </table> 	
       <a href="/addreview" class="btn btn-success">Lisää arvostelu</a> 

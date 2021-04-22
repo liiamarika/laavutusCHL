@@ -35,24 +35,24 @@ li form {
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<header><h1>Laavutus Challenge</h1></header>
-	<p align="center">Tervemenoa laavuttamaan!</p>
+	<header><h1 th:text="#{header}"></h1></header>
+	<p align="center" th:text="#{greeting}"></p>
 	 <div class="col-md-4" style="padding:20px 0">
 	</div>
 	<ul>
-	  <li><a href="/firelist">Tulipaikat</a></li>
-	  <li><a href="/reviewlist">Arvostelut</a></li>
+	  <li><a href="/firelist" th:text="#{nav1}"></a></li>
+	  <li><a href="/reviewlist" th:text="#{nav2}"></a></li>
 	  <li style="float:right"><form th:action="@{/logout}" method="post">
-			<input type="submit" value="Kirjaudu ulos" class="btn btn-sm btn-danger"/>
+			<input type="submit" th:value="#{logout}" class="btn btn-sm btn-danger"/>
 		</form></li>
 	</ul>
     <table class="table table-striped">
 		<tr>
-		    <th>Nimi</th>
-		    <th>Sijainti</th>
-		    <th>Koordinaatit</th>
-		    <th>Tyyppi</th>
-		    <th>Status</th>
+		    <th th:text="#{name}"></th>
+		    <th th:text="#{location}"></th>
+		    <th th:text="#{coordinates}"></th>
+		    <th th:text="#{type}"></th>
+		    <th th:text="#{status}"></th>
 		</tr>  
     	<tr th:each = "fire : ${fires}">
     		<td th:text="${fire.name}"></td>
@@ -60,12 +60,33 @@ li form {
     		<td th:text="${fire.coordinates}"></td>
     		<td th:text="${fire.category}"></td>
     		<td th:text="${fire.status}"></td>	
-    		<td><a href="/addreview" class="btn btn-success">Arvostele</a></td>
-    		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${fire.id})}" class="btn btn-warning">Muokkaa</a></td>  
-    		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${fire.id})}" class="btn btn-danger">Poista</a></td>  	
+    		<td><a href="/addreview" class="btn btn-success" th:text="#{addreview}"></a></td>
+    		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${fire.id})}" class="btn btn-warning" th:text="#{edit}"></a></td>  
+    		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${fire.id})}" class="btn btn-danger" th:text="#{delete}"></a></td>  	
     	</tr>
      </table> 	
-      <a href="/addfire" class="btn btn-success">Lisää tulipaikka</a>  
+      <a href="/addfire" class="btn btn-success" th:text="#{addfire}"></a>  
+      <div style="clear: both; display: block; height: 20px;"></div>
+      
+		    <span th:text="#{lang.change}"></span>:
+			<select id="locales">
+		    <option value=""></option>
+		    <option value="fi" th:text="#{lang.fi}"></option>
+		    <option value="en" th:text="#{lang.en}"></option>
+		    <option value="es" th:text="#{lang.es}"></option>
+		    </select>
+		    
+		    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+			</script>
+			<script type="text/javascript">
+			$(document).ready(function() {
+			    $("#locales").change(function () {
+			        var selectedOption = $('#locales').val();
+			        if (selectedOption != ''){
+			            window.location.replace('firelist?lang=' + selectedOption);
+			        }
+			    });
+			});
+			</script>
 </body>    	
-</body>
 </html>
